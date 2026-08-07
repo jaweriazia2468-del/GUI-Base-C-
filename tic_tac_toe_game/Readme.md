@@ -1,117 +1,226 @@
-Tic-Tac-Toe Suite (C Language)
+# Tic Tac Toe – GTK3
 
-This repository contains two distinct implementations of the classic Tic-Tac-Toe game: a Console-based version that mirrors the classic terminal experience and a GTK3 Graphical User Interface (GUI) version for a modern desktop experience.
+A simple **Tic Tac Toe game** developed in **C using GTK3**. The game provides a graphical 3×3 board where two players can play against each other by taking turns as **X** and **O**.
 
-📋 Features
-1. Console Version (tic_tac_toe_console.c)
-Exact PDF Replication: Matches the specific visual layout, prompts, and win messages found in the project documentation.
+## Features
 
-Positional Input: Uses a numeric mapping system (1–9) for quick move entry.
+* Graphical user interface using GTK3
+* Two-player gameplay
+* 3×3 Tic Tac Toe board
+* Automatic winner detection
+* Draw detection
+* Displays the current player's turn
+* Disables cells after they are selected
+* Displays the winner when a player wins
+* Reset button to start a new game
+* Prevents players from selecting an already occupied cell
 
-ASCII Grid: Renders the board using standard characters like | and --- for cross-platform terminal compatibility.
+## Technologies Used
 
-Quit Functionality: Allows users to exit the game at any time by entering 'q' or 'Q'.
+* **C**
+* **GTK3**
+* **GCC**
+* **GLib**
 
-2. GUI Version (tic_tac_toe.c)
-Interactive UI: Built with the GTK3 toolkit, featuring a windowed application with a 3x3 button grid.
+## How the Game Works
 
-Dynamic Feedback: Includes a status label that updates the current turn and announces the winner with emojis.
+The game starts with **Player X**.
 
-State Management: Automatically disables buttons after they are clicked to prevent invalid moves.
+1. Player X selects an empty cell.
+2. The selected cell is marked with `X`.
+3. The turn changes to Player O.
+4. Player O selects an empty cell and places `O`.
+5. Players continue taking turns.
+6. The game checks the board after every move.
+7. The game ends when:
 
-Instant Reset: Features a "Reset" button to clear the board and restart the game without relaunching the app.
+   * X gets three marks in a row.
+   * O gets three marks in a row.
+   * All nine cells are filled without a winner, resulting in a draw.
+8. Press **Reset** to start a new game.
 
-3. Core Game Logic (Both Versions)
-Automatic Win Detection: Both versions scan rows, columns, and diagonals to identify a winner immediately.
+## Winning Conditions
 
-Draw Handling: The logic identifies a "Draw" or "Tie" state when all 9 moves are completed without a winner.
+A player wins when their three marks are aligned:
 
-This README is designed for a GitHub repository that includes both the GTK3 Graphical Version and the Console Version, as these two files combined perfectly represent the logic and the visual output found in your documents.
+* Horizontally
+* Vertically
+* Diagonally
 
-Tic-Tac-Toe Suite (C Language)
-This repository contains two distinct implementations of the classic Tic-Tac-Toe game: a Console-based version that mirrors the classic terminal experience and a GTK3 Graphical User Interface (GUI) version for a modern desktop experience.
+For example:
 
-📋 Features
-1. Console Version (tic_tac_toe_console.c)
-Exact PDF Replication: Matches the specific visual layout, prompts, and win messages found in the project documentation.
+```text
+X | X | X
+---------
+O | O | 
+---------
+  |   |
+```
 
-Positional Input: Uses a numeric mapping system (1–9) for quick move entry.
+Player **X** wins.
 
-ASCII Grid: Renders the board using standard characters like | and --- for cross-platform terminal compatibility.
+## Main Components
 
-Quit Functionality: Allows users to exit the game at any time by entering 'q' or 'Q'.
+### Game Board
 
-2. GUI Version (tic_tac_toe.c)
-Interactive UI: Built with the GTK3 toolkit, featuring a windowed application with a 3x3 button grid.
+The board is represented using a 3×3 character array:
 
-Dynamic Feedback: Includes a status label that updates the current turn and announces the winner with emojis.
+```c
+static char board[3][3];
+```
 
-State Management: Automatically disables buttons after they are clicked to prevent invalid moves.
+Each cell contains:
 
-Instant Reset: Features a "Reset" button to clear the board and restart the game without relaunching the app.
+* `X` – Player X
+* `O` – Player O
+* `0` – Empty cell
 
-3. Core Game Logic (Both Versions)
-Automatic Win Detection: Both versions scan rows, columns, and diagonals to identify a winner immediately.
+### Player Tracking
 
-Draw Handling: The logic identifies a "Draw" or "Tie" state when all 9 moves are completed without a winner.
+The current player is tracked using:
 
-Turn Cycling: Systems are in place to alternate turns strictly between Player X and Player O.
+```c
+static int current_player = 1;
+```
 
-🛠 Prerequisites
-To compile these programs, you will need a C compiler (like gcc). For the GUI version, the GTK3 development library is required:
-Windows: Install via MSYS2: pacman -S mingw-w64-x86_64-gtk3
-This README is designed for a GitHub repository that includes both the GTK3 Graphical Version and the Console Version, as these two files combined perfectly represent the logic and the visual output found in your documents.
+Where:
 
-Tic-Tac-Toe Suite (C Language)
-This repository contains two distinct implementations of the classic Tic-Tac-Toe game: a Console-based version that mirrors the classic terminal experience and a GTK3 Graphical User Interface (GUI) version for a modern desktop experience.
+```text
+ 1  = X
+-1  = O
+```
 
-📋 Features
-1. Console Version (tic_tac_toe_console.c)
-Exact PDF Replication: Matches the specific visual layout, prompts, and win messages found in the project documentation.
+After every valid move, the player is switched using:
 
-Positional Input: Uses a numeric mapping system (1–9) for quick move entry.
+```c
+current_player = -current_player;
+```
 
-ASCII Grid: Renders the board using standard characters like | and --- for cross-platform terminal compatibility.
+### Winner Detection
 
-Quit Functionality: Allows users to exit the game at any time by entering 'q' or 'Q'.
+The `check_winner()` function checks:
 
-2. GUI Version (tic_tac_toe.c)
-Interactive UI: Built with the GTK3 toolkit, featuring a windowed application with a 3x3 button grid.
+* Three rows
+* Three columns
+* Two diagonals
+* Draw condition
 
-Dynamic Feedback: Includes a status label that updates the current turn and announces the winner with emojis.
+It returns:
 
-State Management: Automatically disables buttons after they are clicked to prevent invalid moves.
+```text
+X → X wins
+O → O wins
+D → Draw
+0 → Game continues
+```
 
-Instant Reset: Features a "Reset" button to clear the board and restart the game without relaunching the app.
+### Reset Function
 
-3. Core Game Logic (Both Versions)
-Automatic Win Detection: Both versions scan rows, columns, and diagonals to identify a winner immediately.
+The `on_reset_clicked()` function clears the board, enables all buttons, resets the move count, and sets the first turn back to X.
 
-Draw Handling: The logic identifies a "Draw" or "Tie" state when all 9 moves are completed without a winner.
+## GUI Structure
 
-Turn Cycling: Systems are in place to alternate turns strictly between Player X and Player O.
+The interface consists of:
 
-🛠 Prerequisites
-To compile these programs, you will need a C compiler (like gcc). For the GUI version, the GTK3 development library is required:
+```text
++----------------------+
+|       Turn: X        |
++----------------------+
+|  [ ] [ ] [ ]         |
+|  [ ] [ ] [ ]         |
+|  [ ] [ ] [ ]         |
++----------------------+
+|       [ Reset ]       |
++----------------------+
+```
 
-Linux (Ubuntu/Debian): sudo apt-get install libgtk-3-dev
+## Requirements
 
-macOS: brew install gtk+3
+You need:
 
-Windows: Install via MSYS2: pacman -S mingw-w64-x86_64-gtk3
+* GCC compiler
+* GTK3 development libraries
+* `pkg-config`
 
-🚀 Compilation & Usage
-Console Version
-Bash
+### Ubuntu/Debian
 
-gcc tic_tac_toe_console.c -o ttt_console
-./ttt_console
-GUI Version
-Bash
+Install the required GTK3 development package:
 
-gcc tic_tac_toe.c -o ttt_gui `pkg-config --cflags --libs gtk+-3.0`
-./ttt_gui
+```bash
+sudo apt update
+sudo apt install gcc libgtk-3-dev
+```
 
+## Compilation
 
+Save the source code as:
 
-Turn Cycling: Systems are in place to alternate turns strictly between Player X and Player O.
+```text
+tic_tac_toe.c
+```
+
+Compile it with:
+
+```bash
+gcc tic_tac_toe.c -o tic_tac_toe `pkg-config --cflags --libs gtk+-3.0`
+```
+
+## Run
+
+After compiling:
+
+```bash
+./tic_tac_toe
+```
+
+## Project Structure
+
+```text
+Tic-Tac-Toe-GTK3/
+│
+├── tic_tac_toe.c
+└── README.md
+```
+
+## Limitations
+
+* Only supports two human players
+* No single-player mode
+* No computer/AI opponent
+* Game statistics are not saved
+* No persistent storage
+* No score tracking between games
+
+## Future Improvements
+
+Possible improvements include:
+
+* Add a single-player mode
+* Implement an AI opponent using Minimax
+* Add player names
+* Add score tracking
+* Add difficulty levels
+* Improve the GUI styling
+* Add sound effects
+* Add animations
+* Save game statistics
+
+## Purpose
+
+This project was created to practice:
+
+* C programming
+* Arrays
+* Functions
+* Conditional logic
+* Event-driven programming
+* GTK3 GUI development
+* Callback functions
+* Basic game logic
+
+## Author
+
+**Javeria Zia**
+
+BS Computer Science
+Federal Urdu University of Arts, Science & Technology (FUUAST)
