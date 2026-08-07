@@ -1,31 +1,187 @@
-FUUAST Student GPA Record System
-A graphical user interface (GUI) application developed in C using the GTK library. This project is built using Function-Oriented Programming (FOP) principles, focusing on modularity, structured data, and event-driven logic.
+# FUUAST Student GPA Record System
 
-Project Overview
-The system provides a desktop interface for users to input and manage student academic records. It allows for the entry of personal and academic details, which are then stored in memory and displayed dynamically within the application.
+A simple **Student GPA Record Management System** built using **C and GTK+**.
+The application provides a graphical user interface (GUI) for entering and displaying student academic information such as name, father's name, roll number, program, semester, and GPA.
 
-Key Features
-Comprehensive Data Entry: Includes dedicated input fields for Name, Father Name, Roll Number, Academic Program, Semester, and GPA.
+## Features
 
-Structured Data Storage: Utilizes C struct to group student information into a single data type for efficient management.
+* Add student records through a graphical interface
+* Store up to **100 students**
+* Collect the following information:
 
-Dynamic Record Display: Features a non-editable GtkTextView that automatically updates to show a list of all added students.
+  * Student Name
+  * Father's Name
+  * Roll Number
+  * Program
+  * Semester
+  * GPA
+* Display all added student records in a text view
+* Automatically format GPA to two decimal places
+* Simple and user-friendly GTK+ interface
 
-Input Handling: Uses standard C functions like atof() to convert string inputs from the GUI into numerical data for GPA processing.
+## Technologies Used
 
-Responsive Layout: Employs a GtkGrid container to ensure all labels, entries, and buttons are organized in a clean, professional alignment.
+* **C**
+* **GTK+ 3**
+* **GCC**
+* **Standard C Libraries**
 
-Fundamentals of Programming (FOP) Highlights
-Modular Functions: The logic is separated into distinct blocks, such as main() for UI initialization and add_student() for data processing.
+  * `stdio.h`
+  * `string.h`
+  * `stdlib.h`
 
-Event-Driven Architecture: Uses the GTK signal system (g_signal_connect) to trigger specific procedures when a user interacts with the "Add Student" button.
+## Student Information Structure
 
-Global State Management: Manages an array of structures and a counter to keep track of the application's data throughout its lifecycle.
+Each student record contains:
 
-Compilation and Execution
-To run this project, ensure you have the GTK development environment installed. Use the following command to compile:
+```c
+typedef struct {
+    char name[50];
+    char father_name[50];
+    char rollno[20];
+    char program[50];
+    char semester[20];
+    float gpa;
+} Student;
+```
 
-Bash
+The program uses an array to store student records:
 
-gcc `pkg-config --cflags gtk+-3.0` -o gpa_system student_management_system.c `pkg-config --libs gtk+-3.0`
-./gpa_system
+```c
+Student students[MAX_STUDENTS];
+```
+
+The maximum number of students is defined as:
+
+```c
+#define MAX_STUDENTS 100
+```
+
+## How It Works
+
+1. Launch the application.
+2. Enter the student's name.
+3. Enter the father's name.
+4. Enter the roll number.
+5. Enter the academic program.
+6. Enter the semester.
+7. Enter the GPA.
+8. Click **Add Student**.
+9. The student's information will appear in the text display area.
+10. Additional students can be added and displayed together.
+
+## GUI Layout
+
+The application contains:
+
+| Field       | Description                  |
+| ----------- | ---------------------------- |
+| Name        | Student's name               |
+| Father Name | Student's father's name      |
+| Roll No     | Student roll number          |
+| Program     | Degree/program name          |
+| Semester    | Current semester             |
+| GPA         | Student GPA                  |
+| Add Student | Adds the entered record      |
+| Text View   | Displays all student records |
+
+## Requirements
+
+Before compiling the project, make sure you have:
+
+* GCC compiler
+* GTK+ 3 development libraries
+* Linux operating system or another environment configured with GTK+ 3
+
+### Ubuntu/Debian
+
+Install GTK+ 3 development packages:
+
+```bash
+sudo apt update
+sudo apt install gcc libgtk-3-dev
+```
+
+## Compilation
+
+Save the source code as:
+
+```text
+student_gpa.c
+```
+
+Compile using:
+
+```bash
+gcc student_gpa.c -o student_gpa `pkg-config --cflags --libs gtk+-3.0`
+```
+
+## Run
+
+After successful compilation:
+
+```bash
+./student_gpa
+```
+
+## Example Output
+
+After adding a student, the application displays information similar to:
+
+```text
+Name: Javeria Zia, Father Name: Muhammad Zia, Roll: CS-123,
+Program: BSCS, Semester: 4th, GPA: 3.98
+```
+
+Multiple student records can be displayed in the same text area.
+
+## Project Structure
+
+```text
+FUUAST-Student-GPA-Record-System/
+│
+├── student_gpa.c
+└── README.md
+```
+
+## Limitations
+
+* Maximum of 100 students
+* Records are stored only in memory
+* Data is lost when the application is closed
+* No database or file storage is currently implemented
+* GPA input validation is not implemented
+* Student records cannot currently be edited or deleted
+
+## Future Improvements
+
+Possible improvements include:
+
+* Save student records to a file
+* Add SQLite/MySQL database support
+* Add Edit and Delete functionality
+* Add GPA validation
+* Add student search functionality
+* Add semester-wise GPA records
+* Calculate CGPA automatically
+* Add authentication for administrators
+* Improve the GUI design
+
+## Purpose
+
+This project was developed as a **C programming and GUI development project** to practice:
+
+* Structures in C
+* Arrays
+* Functions
+* String handling
+* GTK+ GUI programming
+* Event-driven programming
+* Basic student record management
+
+## Author
+
+**Javeria Zia**
+
+BS Computer Science
+Federal Urdu University of Arts, Science & Technology (FUUAST)
